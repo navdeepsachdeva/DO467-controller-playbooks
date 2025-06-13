@@ -1,0 +1,11 @@
+- name: Print the Facts from cache Memory
+  hosts: all
+  gather_facts: false
+  # vars_prompt:
+  #   - name: user_age
+  #     prompt: "Enter you value"
+  #     private: false
+  tasks:
+    - name: Print the facts
+      ansible.builtin.debug:
+        msg: "{{ ansible_hostname }}  == {{ ansible_architecture }} // {{ user_name }} // {{ fav_color }}"

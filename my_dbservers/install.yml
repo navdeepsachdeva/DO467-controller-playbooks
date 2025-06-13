@@ -1,0 +1,31 @@
+- name: Install Web Server
+  hosts: all
+  gather_facts: false
+  remote_user: devops
+  # strategy: debug
+  tasks:
+    - name: Task 1
+      ansible.builtin.command: sleep 2
+      register: out
+
+    - name: Print Task 1 output Task 2
+      ansible.builtin.debug:
+        var: out
+
+    - name: Install Task 21
+      ansible.builtin.dnf:
+        name: httpdd
+        state: present
+      become: true
+
+    - name: Deploy App Task 22
+      ansible.builtin.copy:
+        content: "Hello Latest {{ out.changed }}"
+        dest: /var/www/html/index.html
+      become: true
+
+    - name: Start Service Task 23
+      ansible.builtin.service:
+        name: httpd
+        state: started
+      become: true
